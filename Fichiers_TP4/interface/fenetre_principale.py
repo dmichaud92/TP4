@@ -3,7 +3,7 @@ Module contenant la classe FenetrePrincipale et ses classes utilitaires FrameAtt
 et FrameJoueurActif. Cette fenêtre permet de jouer au jeu.
 """
 
-from tkinter import Tk, Frame, Button, Label, messagebox, Scale
+from tkinter import Tk, Frame, Button, Label, messagebox, Scale, HORIZONTAL
 
 from guerre_des_des_tp3.afficheur import desactiver_affichage, couleurs_interface
 from guerre_des_des_tp3.guerre_des_des import GuerreDesDes
@@ -13,7 +13,6 @@ from guerre_des_des_tp3.joueur_ordinateur import JoueurOrdinateur
 
 # Le temps entre chaque décision de l'ordinateur et pour chaque bataille, en millisecondes.
 TEMPS_ATTENTE = 100
-
 
 class FrameAttaque(Frame):
     def __init__(self, parent):
@@ -82,11 +81,13 @@ class FrameJoueurActif(Frame):
         self.label_des_surplus_fixe = Label(self, text="Dés en surplus: ")
         self.label_des_surplus_variable = Label(self, text="0")
         self.bouton = Button(self, text="-", width=20, command=self.clic_bouton)
+        self.scale = Scale(from_=10, to=500, orient=HORIZONTAL)
 
         self.label_nom_joueur.grid(row=0, column=0)
         self.label_des_surplus_fixe.grid(row=1, column=0)
         self.label_des_surplus_variable.grid(row=1, column=1)
         self.bouton.grid(row=1, column=2)
+        self.scale.grid(row=3, column=0)
 
     def populer(self, joueur):
         """
@@ -126,7 +127,6 @@ class FrameJoueurActif(Frame):
         self.bouton['state'] = 'normal'
         self.bouton['text'] = 'Annuler la sélection'
         self.sur_fin_tour = suite
-
 
 class FenetrePrincipale(Tk):
     def __init__(self):
