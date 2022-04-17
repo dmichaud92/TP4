@@ -128,6 +128,15 @@ class FrameJoueurActif(Frame):
         self.bouton['text'] = 'Annuler la sélection'
         self.sur_fin_tour = suite
 
+    def trouver_scale_ms(self):
+        """
+        Cette méthode donne le temps en ms pour attendre.
+
+        Returns:
+            int: la valeur de self.scale qui donne le temps en ms.
+        """
+        return self.scale.get()
+
 class FenetrePrincipale(Tk):
     def __init__(self):
         """
@@ -210,7 +219,7 @@ class FenetrePrincipale(Tk):
         self.frame_attaque.vider()
 
         if self.est_joueur_ordi():
-            temps_attente = TEMPS_ATTENTE
+            temps_attente = self.frame_joueur.trouver_scale_ms()
         else:
             temps_attente = 0
         self.after(temps_attente, suite)
@@ -238,7 +247,7 @@ class FenetrePrincipale(Tk):
             suite (fonction): La fonction à exécuter suite à l'affichage
         """
         self.frame_attaque.populer(joueur_attaque, force_attaque, joueur_defense, force_defense)
-        self.after(TEMPS_ATTENTE, lambda: self.redessiner(suite))
+        self.after(self.frame_joueur.trouver_scale_ms(), lambda: self.redessiner(suite))
 
     def deroulement_debut_tour(self):
         """
