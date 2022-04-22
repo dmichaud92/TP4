@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 Module contenant la classe FenetrePrincipale et ses classes utilitaires FrameAttaque
 et FrameJoueurActif. Cette fenêtre permet de jouer au jeu.
@@ -377,3 +378,13 @@ class FenetrePrincipale(Tk):
         messagebox.showinfo("Fin de la partie", "Victoire du joueur " + couleurs_interface[gagnant.couleur])
         self.canvas_carte.permettre_clics(None)
         self.frame_joueur.populer(gagnant)
+        self.canvas_carte.destroy()
+        self.frame_joueur.destroy()
+        self.frame_attaque.destroy()
+        self.frame_joueur.scale.destroy()
+        self.label_bienvenue = Label(text="Bienvenue à la Guerre des dés!")
+        self.bouton_commencer = Button(text="Commencer", width=20, command=self.lancer_fenetre_introduction)
+        self.label_bienvenue.grid(row=0, column=0, padx=10, pady=10)
+        self.bouton_commencer.grid(row=1, column=0, padx=10, pady=10)
+
+
