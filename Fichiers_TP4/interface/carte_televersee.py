@@ -18,6 +18,7 @@ Exemple invalide:
 
 from guerre_des_des_tp3.carte import Carte
 from guerre_des_des_tp3.case import Case
+from tkinter import messagebox
 
 
 class CarteTeleversee(Carte):
@@ -46,5 +47,48 @@ class CarteTeleversee(Carte):
         Returns:
             dict: Le dictionnaire de cases, dont les clés sont les coordonnées.
         """
-        # VOTRE CODE ICI
-        raise NotImplementedError("Vous devez faire le défi #4 pour que cette fonctionnalité fonctionne")
+
+        try:
+            fichier = open(nom_fichier, "r")
+        except :
+            messagebox.showerror("Erreur", "Le fichier dont on a entré le nom n’existe pas.")
+            return None
+
+
+        fichier = open(nom_fichier, "r")
+        texte = fichier.read()
+        colonne = -1
+        rangee = 0
+        dico = {}
+
+        try:
+            for car in texte:
+                print(car)
+                if car != ".":
+                    if car != " ":
+                        if car != "\n":
+                            raise ValueError
+        except ValueError:
+            messagebox.showerror("Erreur", "Le fichier contient des caratères invalides.")
+            return None
+
+        for car in texte:
+            colonne = colonne + 1
+            if car == '.':
+                coor = (rangee, colonne)
+                dico[coor] = Case(coor)
+                self.definir_voisins(dico)
+            if car == '\n':
+                rangee = rangee + 1
+                colonne = -1
+
+        if not self.verifier_cases_connectees(dico):
+            messagebox.showerror("Erreur", "Les cases du fichier ne sont pas toutes connectées.")
+            return None
+
+        return dico
+
+# if __name__ == "__main__":
+#     carte = CarteTeleversee('carte_invalide.txt')
+#     carte.lire_fichier_carte()
+

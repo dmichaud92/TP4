@@ -57,3 +57,4 @@ class CarteAutogeneree(Carte):
             cases_connectees = self.verifier_cases_connectees(cases)
             n_essais += 1
         return cases
+
