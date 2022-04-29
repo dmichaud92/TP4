@@ -388,3 +388,4 @@ class FenetrePrincipale(Tk):
         self.bouton_commencer.grid(row=1, column=0, padx=10, pady=10)
 
 
+
