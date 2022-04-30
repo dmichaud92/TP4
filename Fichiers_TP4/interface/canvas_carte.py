@@ -31,7 +31,19 @@ class CanvasCarte(Canvas):
         self.hauteur_case = self.hauteur_canvas // self.carte.hauteur
         self.largeur_case = self.largeur_canvas // self.carte.largeur
         self.bind("<Button-1>", self.selectionner_case)
+        self.bind("<Motion>", self.changer_taille_police)
         self.dessiner_canvas()
+
+    def changer_tailler_police(self):
+        """
+
+        Returns:
+
+        """
+
+
+
+        pass
 
     def pixel_vers_coordonnees(self, x, y):
         """
