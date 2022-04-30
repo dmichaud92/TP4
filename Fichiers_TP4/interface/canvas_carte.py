@@ -33,17 +33,31 @@ class CanvasCarte(Canvas):
         self.bind("<Button-1>", self.selectionner_case)
         self.bind("<Motion>", self.changer_taille_police)
         self.dessiner_canvas()
+        self.font_sizes = {}
 
-    def changer_tailler_police(self):
+    def changer_taille_police(self, event):
         """
 
         Returns:
 
         """
 
+        x, y = event.y, event.x
+        coor = self.pixel_vers_coordonnees(x,y)
+        case_sous_la_souris = self.carte.case[coor]
+        self.fct_recursive(case_sous_la_souris, 30)
+        self.dessiner_canvas()
+
+    def fct_recursive(self, case, font_size):
+        self.font_sizes[case.coordonnees] = font_size
+        for voisin in case.voisins:
+            if voisin.coordonnees not in self.font_sizes or self.font_sizes[voisin.coordonnees] < font_size:
+                self.fct_recursive(voisin, font_size-5)
 
 
-        pass
+
+
+
 
     def pixel_vers_coordonnees(self, x, y):
         """
@@ -91,7 +105,10 @@ class CanvasCarte(Canvas):
         """
         self.delete(ALL)
         for (x, y), case in self.carte.cases.items():
-            font_size = 20
+            if len(self.font_sizes) > 0:
+                font_size = self.font_sizes[(x, y)]
+            else:
+                font_size = 20
             if case.mode == 'attaque':
                 outline, width = 'gray', 4
             elif case.mode == 'defense':
@@ -107,6 +124,7 @@ class CanvasCarte(Canvas):
                                   outline=outline, width=width)
             self.create_text((gauche + droite) // 2, (haut + bas) // 2, fill='black',
                              font="Times {} bold".format(font_size), text=len(case.des))
+
 
     def permettre_clics(self, suite_clic):
         """
