@@ -32,8 +32,8 @@ class CanvasCarte(Canvas):
         self.largeur_case = self.largeur_canvas // self.carte.largeur
         self.bind("<Button-1>", self.selectionner_case)
         self.bind("<Motion>", self.changer_taille_police)
-        self.dessiner_canvas()
         self.font_sizes = {}
+        self.dessiner_canvas()
 
     def changer_taille_police(self, event):
         """
