@@ -31,8 +31,12 @@ class CanvasCarte(Canvas):
         self.hauteur_case = self.hauteur_canvas // self.carte.hauteur
         self.largeur_case = self.largeur_canvas // self.carte.largeur
         self.bind("<Button-1>", self.selectionner_case)
+<<<<<<< Updated upstream
         self.bind("<Motion>", self.changer_taille_police)
         self.font_sizes = {}
+=======
+        self.bind("<Motion>", self.changer_taille_police())
+>>>>>>> Stashed changes
         self.dessiner_canvas()
 
     def changer_taille_police(self, event):
@@ -57,7 +61,12 @@ class CanvasCarte(Canvas):
 
 
 
+<<<<<<< Updated upstream
 
+=======
+        coor = self.pixel_vers_coordonnees(event.x, event.y)
+        pass
+>>>>>>> Stashed changes
 
     def pixel_vers_coordonnees(self, x, y):
         """
