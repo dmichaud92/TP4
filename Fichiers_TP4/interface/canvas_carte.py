@@ -31,42 +31,50 @@ class CanvasCarte(Canvas):
         self.hauteur_case = self.hauteur_canvas // self.carte.hauteur
         self.largeur_case = self.largeur_canvas // self.carte.largeur
         self.bind("<Button-1>", self.selectionner_case)
-<<<<<<< Updated upstream
         self.bind("<Motion>", self.changer_taille_police)
         self.font_sizes = {}
-=======
-        self.bind("<Motion>", self.changer_taille_police())
->>>>>>> Stashed changes
         self.dessiner_canvas()
 
     def changer_taille_police(self, event):
         """
 
+        Args:
+            event:
+
         Returns:
 
         """
-
         x, y = event.y, event.x
-        coor = self.pixel_vers_coordonnees(x,y)
-        case_sous_la_souris = self.carte.case[coor]
-        self.fct_recursive(case_sous_la_souris, 30)
+        coor = self.pixel_vers_coordonnees(x, y)
+
+        try:
+            case_sous_la_souris = self.carte.cases[coor]
+        except:
+            return None
+
+        case_sous_la_souris = self.carte.cases[coor]
+        self.fct_recursive(case_sous_la_souris, 40)
         self.dessiner_canvas()
 
     def fct_recursive(self, case, font_size):
-        self.font_sizes[case.coordonnees] = font_size
+        """
+
+        Args:
+            case:
+            font_size:
+
+        Returns:
+
+        """
+        if font_size < 10:
+            self.font_sizes[case.coordonnees] = 10
+        else:
+            self.font_sizes[case.coordonnees] = font_size
         for voisin in case.voisins:
             if voisin.coordonnees not in self.font_sizes or self.font_sizes[voisin.coordonnees] < font_size:
-                self.fct_recursive(voisin, font_size-5)
-
-
-
-
-<<<<<<< Updated upstream
-
-=======
-        coor = self.pixel_vers_coordonnees(event.x, event.y)
-        pass
->>>>>>> Stashed changes
+                self.fct_recursive(voisin, font_size - 5)
+            if self.font_sizes[voisin.coordonnees] == font_size:
+                self.fct_recursive(voisin, font_size - 5)
 
     def pixel_vers_coordonnees(self, x, y):
         """
@@ -133,7 +141,6 @@ class CanvasCarte(Canvas):
                                   outline=outline, width=width)
             self.create_text((gauche + droite) // 2, (haut + bas) // 2, fill='black',
                              font="Times {} bold".format(font_size), text=len(case.des))
-
 
     def permettre_clics(self, suite_clic):
         """
