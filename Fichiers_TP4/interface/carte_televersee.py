@@ -63,7 +63,6 @@ class CarteTeleversee(Carte):
 
         try:
             for car in texte:
-                print(car)
                 if car != ".":
                     if car != " ":
                         if car != "\n":

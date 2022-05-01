@@ -37,15 +37,23 @@ class CanvasCarte(Canvas):
 
     def changer_taille_police(self, event):
         """
+        Cette méthode trouve sur quelle case la souris se trouve avec sa position pixel par pixel et est activée à
+        chaque fois que la souris se déplace. Ensuite elle appelle la méthode récursive self.fct_recursive afin de
+        changer la taille de la police de chaque case de la carte dans le dictionnaire self.font_sizes.
 
         Args:
-            event:
+            event: La positon event.x et event.y de la souris en pixel par pixel sur le canvas.
 
         Returns:
+            None: Seulement si la case ne fait pas partie de la liste des cases existantes. Exemple: la case est un
+            trou dans la carte. La position existe une fois convertit avec la méthode self.pixel_vers_coordonnees, mais
+            la case n'est pas dans la liste car c'est un trou. Ça empêche d'afficher un message d'erreur dans la fenêtre
+            console dans Pycharm.
 
         """
         x, y = event.y, event.x
         coor = self.pixel_vers_coordonnees(x, y)
+        self.font_sizes = {}
 
         try:
             case_sous_la_souris = self.carte.cases[coor]
@@ -53,21 +61,21 @@ class CanvasCarte(Canvas):
             return None
 
         case_sous_la_souris = self.carte.cases[coor]
-        self.fct_recursive(case_sous_la_souris, 40)
+        self.fct_recursive(case_sous_la_souris, 30)
         self.dessiner_canvas()
 
     def fct_recursive(self, case, font_size):
         """
+        Cette méthode récursive va regarder un case et lui attribuer un taille de police ainsi qu'à ses voisins
+        récursivement.
 
         Args:
-            case:
-            font_size:
-
-        Returns:
+            case: La case qui va être ajouté au dictionnaire self.font_sizes et que la police va etre changée
+            font_size: La taille de la police que la case va avoir dans le dictionnaire self.font_sizes
 
         """
-        if font_size < 10:
-            self.font_sizes[case.coordonnees] = 10
+        if font_size < 15:
+            self.font_sizes[case.coordonnees] = 15
         else:
             self.font_sizes[case.coordonnees] = font_size
         for voisin in case.voisins:
@@ -125,7 +133,7 @@ class CanvasCarte(Canvas):
             if len(self.font_sizes) > 0:
                 font_size = self.font_sizes[(x, y)]
             else:
-                font_size = 20
+                font_size = 15
             if case.mode == 'attaque':
                 outline, width = 'gray', 4
             elif case.mode == 'defense':
